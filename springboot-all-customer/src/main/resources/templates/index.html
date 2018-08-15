@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/jquery.table2excel.min.js}"></script>
+</head>
+<body>
+    <div class="layui-body"style="margin-top:30px">
+        <p>
+            <a th:href="@{/toJumpAddUser}">添加</a>
+        </p>
+        <table class="layui-table" style="width: 50%" >
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>密码</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${userList}">
+                    <td th:text="${user.uid}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.password}"></td>
+                    <td>
+                        <a th:href="@{'/toUserUpdate?uid='+${user.uid}}">修改</a>
+                        <a th:href="@{'/delUser?uid='+${user.uid}}">删除</a>
+                    </td>
+                </tr>
+                <tr style="text-align: center">
+                    <td colspan="5" >
+                        <span th:if="${curPage <= 1}">
+                            首页&nbsp
+                            上一页&nbsp
+                        </span>
+                        <span th:if="${curPage > 1}">
+                            <a th:href="@{/index}">首页&nbsp</a>
+                            <a th:href="@{'/index?curPage='+${curPage-1}}" >上一页&nbsp</a>
+                        </span>
+                        <span th:if="${curPage == totalPage}">
+                            下一页&nbsp
+                            尾页
+                        </span>
+                        <span th:if="${curPage < totalPage}" >
+                            <a th:href="@{'/index?curPage='+${curPage+1}}" >下一页&nbsp</a>
+                            <a th:href="@{'/index?curPage='+${totalPage}}" >尾页</a>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
